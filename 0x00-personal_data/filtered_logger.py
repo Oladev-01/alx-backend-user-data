@@ -5,6 +5,7 @@ import re
 
 
 def filter_datum(fields: List[str], redaction: str, message: str, separator: str):  # noqa
+    """obsfucating"""
     if fields is None or redaction is None:
         return message
     pattern = f"({'|'.join(fields)})=[^{separator}]+"
