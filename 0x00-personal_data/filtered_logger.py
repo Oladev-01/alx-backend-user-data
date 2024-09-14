@@ -32,12 +32,12 @@ class RedactingFormatter(logging.Formatter):
         return filter_datum(self.fields, self.REDACTION, original, self.SEPARATOR)  # noqa
 
 
-def get_logger() -> logging.getLogger:
+def get_logger() -> logging.Logger:
     """returns a logger object"""
     logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
     handler = logging.StreamHandler()
-    formatter = RedactingFormatter(PII_FIELDS)
+    formatter = RedactingFormatter(list(PII_FIELDS))
     handler.setFormatter(formatter)
     logger.addHandler(handler)
     return logger
