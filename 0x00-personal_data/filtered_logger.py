@@ -52,15 +52,11 @@ def get_db() -> connection.MySQLConnection:
     get_dbs = os.getenv("PERSONAL_DATA_DB_NAME")
     get_host = os.getenv("PERSONAL_DATA_DB_HOST", "localhost")
     get_usr_pwd = os.getenv("PERSONAL_DATA_DB_PASSWORD", "")
-    try:
-        con_db = mysql.connector.connect(
-            user=get_username,
-            host=get_host,
-            password=get_usr_pwd,
-            database=get_dbs,
-        )
-        print("connected to db")
-        return con_db
-    except mysql.connector.Error:
-        print("there was an error")
-        return
+    con_db = mysql.connector.connect(
+        user=get_username,
+        host=get_host,
+        password=get_usr_pwd,
+        database=get_dbs,
+    )
+    print("connected to db")
+    return con_db
