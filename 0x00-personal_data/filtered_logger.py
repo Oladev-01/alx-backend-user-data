@@ -5,7 +5,7 @@ import re
 import logging
 
 
-PII_FIELDS = ("ip", "email", "phone", "ssn", "password")
+PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
 
 def filter_datum(fields: List[str], redaction: str, message: str, separator: str) -> str:  # noqa
@@ -32,7 +32,7 @@ class RedactingFormatter(logging.Formatter):
         return filter_datum(self.fields, self.REDACTION, original, self.SEPARATOR)  # noqa
 
 
-def get_logger() -> logging.Logger:
+def get_logger() -> logging.getLogger:
     """returns a logger object"""
     logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
