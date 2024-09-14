@@ -5,7 +5,7 @@ import re
 import logging
 
 
-PII_FIELDS = ("name", "email", "phone", "ssn", "ip")
+PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
 
 def filter_datum(fields: List[str], redaction: str, message: str, separator: str) -> str:  # noqa
@@ -37,7 +37,7 @@ def get_logger() -> logging.Logger:
     logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
     handler = logging.StreamHandler()
-    formatter = RedactingFormatter(["name", "phone", "email", "ssn", "ip"])  # noqa
+    formatter = RedactingFormatter(["email", "ssn", "password"])  # noqa
     handler.setFormatter(formatter)
     logger.addHandler(handler)
     return logger
