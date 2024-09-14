@@ -37,7 +37,7 @@ def get_logger() -> logging.Logger:
     logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
     handler = logging.StreamHandler()
-    formatter = RedactingFormatter(["name", "email", "phone", "ssn", "password"])
+    formatter = RedactingFormatter(["name", "email", "phone", "ssn", "password", "ip"])  # noqa
     handler.setFormatter(formatter)
     logger.addHandler(handler)
     return logger
