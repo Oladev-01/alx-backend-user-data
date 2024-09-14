@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """masking pii"""
+import mysql.connector
+from mysql.connector import connection
+import os
 from typing import List
 import re
 import logging
@@ -41,3 +44,23 @@ def get_logger() -> logging.Logger:
     handler.setFormatter(formatter)
     logger.addHandler(handler)
     return logger
+
+
+def get_db() -> connection.MySQLConnection:
+    """connects to a database"""
+    get_username = os.getenv("PERSONAL_DATA_DB_USERNAME", "root")
+    get_dbs = os.getenv("PERSONAL_DATA_DB_NAME")
+    get_host = os.getenv("PERSONAL_DATA_DB_HOST", "localhost")
+    get_usr_pwd = os.getenv("PERSONAL_DATA_DB_PASSWORD", "")
+    try:
+        con_db = mysql.connector.connect(
+            user=get_username,
+            host=get_host,
+            password=get_usr_pwd,
+            database=get_dbs,
+        )
+        print("connected to db")
+        return con_db
+    except mysql.connector.Error:
+        print("there was an error")
+        return
