@@ -52,3 +52,19 @@ class BasicAuth(Auth):
         if not get_info[0].is_valid_password(user_pwd):
             return None
         return get_info[0]
+
+    def current_user(self, request=None) -> TypeVar('User'):
+        """check authorization for the user"""
+        auth_header = self.authorization_header(request)
+        if auth_header is None:
+            return None
+        base_64_extract = self.extract_base64_authorization_header(auth_header)
+        if base_64_extract is None:
+            return None
+        decoded_extract = self.decode_base64_authorization_header(base_64_extract)  # noqa
+        if decoded_extract is None:
+            return None
+        get_email, get_pwd = self.extract_user_credentials(decoded_extract)
+        if get_email is None or get_pwd is None:
+            return None
+        return self.user_object_from_credentials(get_email, get_pwd)
