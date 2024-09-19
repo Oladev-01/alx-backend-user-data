@@ -1,19 +1,16 @@
 #!/usr/bin/env python3
-""" Main 6
-"""
-import base64
-from api.v1.auth.basic_auth import BasicAuth
-from models.user import User
+from typing import List
 
-""" Create a user test """
-user_email = "bob100@hbtn.io"
-user_clear_pwd = "H0lberton:School:98!"
 
-user = User()
-user.email = user_email
-user.password = user_clear_pwd
-print("New user: {}".format(user.id))
-user.save()
+def check_path(path: str, excluded: List[str]) -> bool:
+    path = path if path.endswith('/') else path + '/'
+    for get_path in excluded:
+        if get_path.endswith('*'):
+            if path.startswith(get_path[:-1]):
+                return False
+            elif path == get_path:
+                return False
+    return True
 
-basic_clear = "{}:{}".format(user_email, user_clear_pwd)
-print("Basic Base64: {}".format(base64.b64encode(basic_clear.encode('utf-8')).decode("utf-8")))
+
+print(check_path("/api/v1/users", ["/api/v1/stat*"]))
