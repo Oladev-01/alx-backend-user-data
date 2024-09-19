@@ -32,7 +32,7 @@ def unauthorized():
     abort(401)
 
 
-@app_views.route('/forbidden')
+@app_views.route('/forbidden', strict_slashes=False)
 def forbidden():
     """endpoint to test the forbidden handler"""
     abort(403)
