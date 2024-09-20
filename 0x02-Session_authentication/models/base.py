@@ -19,7 +19,7 @@ class Base():
     def __init__(self, *args: list, **kwargs: dict):
         """ Initialize a Base instance
         """
-        s_class = str(self.__class__.__name__)
+        s_class = str(self.__class__.__name__) # User
         if DATA.get(s_class) is None:
             DATA[s_class] = {}
 
@@ -61,9 +61,9 @@ class Base():
     def load_from_file(cls):
         """ Load all objects from file
         """
-        s_class = cls.__name__
+        s_class = cls.__name__ # User
         file_path = ".db_{}.json".format(s_class)
-        DATA[s_class] = {}
+        DATA[s_class] = {}  # DATA = {'User': {}}
         if not path.exists(file_path):
             return
 

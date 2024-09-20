@@ -34,7 +34,13 @@ def check_auth():
     if not auth:
         return
 
-    excluded_paths = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/', '/api/v1/auth_session/login/']  # noqa
+    excluded_paths = ['/api/v1/status/',
+                       '/api/v1/unauthorized/',
+                         '/api/v1/forbidden/',
+                           '/api/v1/auth_session/login/',
+                             '/api/v1/auth_session/logout/'
+                             ]  # noqa
+
     if not auth.require_auth(request.path, excluded_paths):
         return
 
@@ -71,4 +77,4 @@ def forbidden(error):
 if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")
     port = getenv("API_PORT", "5100")
-    app.run(host=host, port=port)
+    app.run(host=host, port=port, debug=True)
