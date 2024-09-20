@@ -34,7 +34,7 @@ def handle_session():
         return response
 
 
-@app_views.route('/auth_session/logout', strict_slashes=False, methods=['DELETE'])
+@app_views.route('/auth_session/logout', strict_slashes=False, methods=['DELETE'])  # noqa
 def delete_from_session():
     """delete from session"""
     from api.v1.app import auth
