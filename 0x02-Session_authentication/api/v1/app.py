@@ -34,9 +34,12 @@ def check_auth():
     if not auth:
         return
 
-    excluded_paths = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']  # noqa
+    excluded_paths = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/', '/api/v1/auth_session/login/']  # noqa
     if not auth.require_auth(request.path, excluded_paths):
         return
+
+    if auth.session_cookie(request) is None:
+        abort(401)
 
     if auth.authorization_header(request) is None:
         abort(401)
@@ -44,6 +47,7 @@ def check_auth():
     get_user = auth.current_user(request)
     if get_user is None:
         abort(403)
+
     request.current_user = get_user
 
 
