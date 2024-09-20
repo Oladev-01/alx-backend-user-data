@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """auth class setup"""
+import os
 from webbrowser import get
 from flask import request
 from typing import List, TypeVar
@@ -29,3 +30,10 @@ class Auth:
     def current_user(self, request=None) -> TypeVar('User'):
         """for current user"""
         return None
+
+    def session_cookie(self, request=None):
+        """extract session cookie"""
+        if request is None:
+            return None
+        session_name = os.getenv("SESSION_NAME", '_my_session_id')
+        return request.cookies.get(session_name)
