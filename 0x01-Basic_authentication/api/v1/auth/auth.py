@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """auth class setup"""
-from webbrowser import get
 from flask import request
 from typing import List, TypeVar
 

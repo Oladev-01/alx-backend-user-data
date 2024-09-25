@@ -4,7 +4,6 @@ import datetime
 import os
 from api.v1.auth.session_auth import SessionAuth
 
-
 class SessionExpAuth(SessionAuth):
     """sets expiry for session"""
     def __init__(self):
