@@ -17,6 +17,9 @@ def _hash_password(password: str) -> str:
     salt = bcrypt.gensalt()
     return bcrypt.hashpw(password.encode('utf-8'), salt)
 
+def _generate_uuid() -> str:
+    """generate a uuid"""
+    return str(uuid.uuid4())
 
 class Auth:
     """Auth class to interact with the authentication database.
@@ -43,7 +46,3 @@ class Auth:
                                   user.hashed_password)
         except (InvalidRequestError, NoResultFound):
             return False
-
-    def _generate_uuid(self) -> str:
-        """generate a uuid"""
-        return str(uuid.uuid4())
