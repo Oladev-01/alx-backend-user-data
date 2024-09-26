@@ -6,10 +6,10 @@ from flask import Flask, jsonify
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def homepage():
     """returns the homepage"""
-    return jsonify({{"message": "Bienvenue"}})
+    return jsonify({"message": "Bienvenue"})
 
 
 if __name__ == "__main__":
