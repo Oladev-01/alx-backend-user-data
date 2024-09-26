@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """auth model"""
 import bcrypt
+from typing import Any
 
 
-def _hash_password(self, password: str) -> Any:
+def _hash_password(password: str) -> Any:
     """"hash password"""
     if password is None or not isinstance(password, str):
         return None
