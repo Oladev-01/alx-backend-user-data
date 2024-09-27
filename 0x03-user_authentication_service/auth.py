@@ -81,7 +81,6 @@ class Auth:
         except (InvalidRequestError, NoResultFound, ValueError):
             return None
 
-
     def get_reset_password_token(self, email: str) -> str:
         """generate a new token"""
         try:
