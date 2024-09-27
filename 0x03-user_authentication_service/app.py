@@ -43,7 +43,8 @@ def set_session() -> str:
     """ Logs in a user and returns session ID """
     email = request.form.get('email')
     password = request.form.get('password')
-    AUTH.valid_login(email, password)
+    if not AUTH.valid_login(email, password):
+        abort(401)
     session_id = AUTH.create_session(email)
     if session_id is None:
         abort(401)
