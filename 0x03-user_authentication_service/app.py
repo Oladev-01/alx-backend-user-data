@@ -41,19 +41,17 @@ def register_user() -> str:
 @app.route('/sessions', methods=['POST'])
 def set_session() -> str:
     """ Logs in a user and returns session ID """
-    try:
-        email = request.form.get('email')
-        password = request.form.get('password')
-        AUTH.valid_login(email, password)
-        session_id = AUTH.create_session(email)
-        msg = {"email": email, "message": "logged in"}
-        response = jsonify(msg)
-
-        response.set_cookie("session_id", session_id)
-
-        return response
-    except (InvalidRequestError, NoResultFound):
+    email = request.form.get('email')
+    password = request.form.get('password')
+    AUTH.valid_login(email, password)
+    session_id = AUTH.create_session(email)
+    if session_id is None:
         abort(401)
+    msg = {"email": email, "message": "logged in"}
+    response = jsonify(msg)
+
+    response.set_cookie("session_id", session_id)
+    return response
 
 
 @app.route('/sessions', methods=['DELETE'])
@@ -72,6 +70,25 @@ def log_out() -> str:
     AUTH.destroy_session(user.id)
 
     return redirect('/')
+
+
+@app.route('/profile', methods=['GET'])
+def profile() -> str:
+    """ If the user exist, respond with a 200
+    """
+    session_id = request.cookies.get("session_id", None)
+
+    if session_id is None:
+        abort(403)
+
+    user = AUTH.get_user_from_session_id(session_id)
+
+    if user is None:
+        abort(403)
+
+    msg = {"email": user.email}
+
+    return jsonify(msg), 200
 
 
 if __name__ == "__main__":
