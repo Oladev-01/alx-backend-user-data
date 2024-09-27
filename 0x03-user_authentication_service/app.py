@@ -55,16 +55,23 @@ def set_session() -> str:
     except (InvalidRequestError, NoResultFound):
         abort(401)
 
-@app.route('/sessions', strict_slashes=False, methods=['DELETE'])
-def del_session():
-    """deletes a session"""
-    session_id = request.cookies.get('session_id')
-    try:
-        user = AUTH.get_user_from_session_id(session_id)
-        AUTH.destroy_session(user.id)
-        return redirect('/')
-    except (NoResultFound, InvalidRequestError, ValueError):
+
+@app.route('/sessions', methods=['DELETE'])
+def log_out() -> str:
+    """destroy from session"""
+    session_id = request.cookies.get("session_id", None)
+
+    if session_id is None:
         abort(403)
+
+    user = AUTH.get_user_from_session_id(session_id)
+
+    if user is None:
+        abort(403)
+
+    AUTH.destroy_session(user.id)
+
+    return redirect('/')
 
 
 if __name__ == "__main__":
