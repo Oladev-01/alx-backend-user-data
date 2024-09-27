@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """auth model"""
+from cgitb import reset
 import uuid
 import bcrypt
 from db import DB
@@ -90,3 +91,14 @@ class Auth:
             return new_token
         except (InvalidRequestError, NoResultFound):
             raise ValueError
+
+    def update_password(self, reset_token: str, password: str) -> None:
+        """use reset token to update the user password"""
+        try:
+            user = self._db.find_user_by(reset_token=reset_token)
+        except (InvalidRequestError, NoResultFound):
+            raise ValueError
+        hashed_pwd = _hash_password(password)
+        self._db.update_user(user.id, hashed_password=hashed_pwd,
+                             reset_token=None)
+        return None
