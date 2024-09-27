@@ -6,7 +6,7 @@ from auth import Auth
 from flask import (
     Flask, jsonify,
     make_response, request,
-    abort, redirect, url_for
+    abort, redirect
 )
 
 app = Flask(__name__)
@@ -62,7 +62,7 @@ def del_session():
     try:
         user = AUTH.get_user_from_session_id(session_id)
         AUTH.destroy_session(user.id)
-        return redirect(url_for('hello_world'))
+        return redirect('/')
     except (NoResultFound, InvalidRequestError, ValueError):
         abort(403)
 
