@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """auth model"""
-from tkinter import NO
 import uuid
 import bcrypt
 from db import DB
