@@ -7,7 +7,7 @@ from db import DB
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
 import bcrypt
-from typing import Any
+from typing import Union
 from user import User
 
 
@@ -60,7 +60,7 @@ class Auth:
         except (NoResultFound, InvalidRequestError):
             return None
 
-    def get_user_from_session_id(self, session_id: str) -> User:
+    def get_user_from_session_id(self, session_id: str) -> Union[User, None]:
         """returns the user by session id"""
         try:
             user = self._db.find_user_by(session_id=session_id)
