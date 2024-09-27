@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """API Routes for Authentication Service"""
-from sqlalchemy.exc import NoResultFound
+from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
 from auth import Auth
 from flask import (
