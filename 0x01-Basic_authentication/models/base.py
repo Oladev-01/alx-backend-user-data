@@ -89,7 +89,7 @@ class Base():
         """ Save current object
         """
         s_class = self.__class__.__name__
-        self.updated_at = datetime.utcnow()
+        self.updated_at = datetime.now()
         DATA[s_class][self.id] = self
         self.__class__.save_to_file()
 

@@ -10,7 +10,9 @@ class SessionDBAuth(SessionExpAuth):
 
     def create_session(self, user_id=None):
         """create session"""
-        session_id = str(uuid.uuid4())
+        session_id = super().create_session(user_id)
+        if session_id is None:
+            return None
         usersession = UserSession(session_id=session_id, user_id=user_id)
         usersession.save()
         return session_id
@@ -19,8 +21,8 @@ class SessionDBAuth(SessionExpAuth):
         """user id for session"""
         get_session = UserSession.search({'session_id': session_id})
         if get_session is None:
-            return None        
-        return get_session[0].to_json().get('user_id')
+            return None
+        return super().user_id_for_session_id(session_id)
     
     def destroy_session(self, request=None) -> bool:
         """destroy session from database"""
